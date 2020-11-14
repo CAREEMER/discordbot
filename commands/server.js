@@ -4,5 +4,6 @@ module.exports = {
 	guildOnly: true,
 	execute(message) {
 		message.channel.send(`Название сервера: ${message.guild.name}.\nВсего участников: ${message.guild.memberCount}.`);
+		console.log(message.guild.channels.cache)
 	},
 };

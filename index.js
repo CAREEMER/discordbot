@@ -33,6 +33,15 @@ client.on('message', message => {
 		return message.reply('Не могу выполниться эту команду в ЛС!');
 	}
 
+	if (command.dmOnly) {
+		if (message.channel.type === 'dm') {
+			client.channels.cache.get("channel-id").send(`Аноним сообщает:\n > ${message.content.slice(5)}\nЧто бы оставить анонимный пост, используйте команду [$post] у меня в ЛС!`);
+			return;
+		} else {
+			return message.reply('Могу выполнить эту команду только через ЛС!');
+		}
+	}
+
 	if (command.args && !args.length) {
 		let reply = `Введите аргумент команды, ${message.author}!`;
 
@@ -56,7 +65,7 @@ client.on('message', message => {
 
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now) / 1000;
-			return message.reply(`Подожди ${timeLeft.toFixed(1)} секунд(ы) перед испольщованием команды \`${command.name}\` .`);
+			return message.reply(`Подожди ${timeLeft.toFixed(1)} секунд(ы) перед использованием команды \`${command.name}\` .`);
 		}
 	}
 
