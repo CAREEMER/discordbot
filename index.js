@@ -33,14 +33,10 @@ client.on('message', message => {
 		return message.reply('Не могу выполниться эту команду в ЛС!');
 	}
 
-	if (command.dmOnly) {
-		if (message.channel.type === 'dm') {
-			client.channels.cache.get("channel-id").send(`Аноним сообщает:\n > ${message.content.slice(5)}\nЧто бы оставить анонимный пост, используйте команду [$post] у меня в ЛС!`);
-			return;
-		} else {
-			return message.reply('Могу выполнить эту команду только через ЛС!');
-		}
+	if (command.dmOnly && message.channel.type !== 'dm') {
+		return message.reply('Могу выполнить эту команду только через ЛС!');
 	}
+	
 
 	if (command.args && !args.length) {
 		let reply = `Введите аргумент команды, ${message.author}!`;
@@ -73,7 +69,7 @@ client.on('message', message => {
 	setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
 	try {
-		command.execute(message, args);
+		command.execute(message, args, client);
 	} catch (error) {
 		console.error(error);
 		message.reply('Была ошибка при выполнении команды!');

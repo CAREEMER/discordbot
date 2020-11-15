@@ -4,7 +4,7 @@ module.exports = {
     args: true,
     dmOnly: true,
     cooldown: 60,
-	execute(message, args) {
-		//client.channels.cache.get("510155117622722583").send(`Аноним сообщает: > ${message.content.slice(5)}\nЧто бы оставить анонимный пост, используйте команду [$post] у меня в ЛС!`);
+	execute(message, args, client) {
+		client.channels.cache.get(args[0]).send(`Аноним сообщает: \n> ${message.content.slice(7 + args[0].length)}\nКоманда [$post <channelID> <text>]`);
 	},
 };
